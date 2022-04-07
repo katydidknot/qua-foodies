@@ -59,7 +59,7 @@ function App() {
                             <Grid item md={1}></Grid>
                             <Grid item md={12}>
                                 <Button
-                                    sx={{color: "#280004", marign: "3rem", backgroundColor: "#E3ECE9"}}>Submit</Button>
+                                    sx={{color: "#280004", backgroundColor: "#E3ECE9", marginTop: "4rem"}}>Submit</Button>
                             </Grid>
                         </Grid>
                     </Drawer>
