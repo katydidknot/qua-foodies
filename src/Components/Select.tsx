@@ -4,8 +4,8 @@ import {Autocomplete, Box, FormControl, TextField} from "@mui/material";
 import StyledTextField from "./StyledTextField";
 
 export const YearSelect: React.FC = () => {
-    const [selectedYear, setSelectedYear] = useState<string>("2022")
-    const years = ["2020", "2021", "2022"]
+    const [selectedYear, setSelectedYear] = useState<string>("Openings")
+    const years = ["Openings", "Closings"]
     return (
         <Box sx={{minWidth: 120, backgroundColor: "#E3ECE9", margin: "1rem"}}>
             <FormControl fullWidth size={"small"}>
@@ -19,7 +19,7 @@ export const YearSelect: React.FC = () => {
                         <StyledTextField {...params}
                                    variant={"outlined"}
                                    fullWidth size={"small"}
-                                   label={"Select Year"}
+                                   label={"Select Openings or Closings"}
                                    InputProps={{
                                        ...params.InputProps
                                    }}
