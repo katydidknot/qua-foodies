@@ -53,12 +53,16 @@ function App() {
     const selectedDataTypeOptions = ["Openings", "Closings"]
 
     const getPrediction = async () => {
-        const response = await axios.post("localhost:5000/api", {
+        const response = await axios.post("http://127.0.0.1:5000/api", {
             'review_count': 1,
             'rating': 1,
             'price': 1,
             'pickup': 1,
             'delivery': 1
+        }, {
+            headers: {
+                'Access-Control-Allow-Origin': '*'
+            }
         })
         setShowPrediction(true)
     }
