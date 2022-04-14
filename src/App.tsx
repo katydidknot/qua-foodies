@@ -48,9 +48,8 @@ export interface CSVRow {
 function App() {
     const [openingData, setOpeningData] = useState<any>(null)
     const [closingData, setClosingData] = useState<any>(null)
-    const [selectedDataType, setSelectedDataType] = useState<string>("Openings")
     const [showPrediction, setShowPrediction] = useState<boolean>(false)
-    const selectedDataTypeOptions = ["Openings", "Closings"]
+    const [showFeatureSelection, setShowFeatureSelection] = useState<boolean>(false)
 
     const getPrediction = async () => {
         const response = await axios.post("http://127.0.0.1:5000/api", {
@@ -66,7 +65,6 @@ function App() {
         })
         setShowPrediction(true)
     }
-
     useEffect(() => {
         Papa.parse('yelp_data_final.csv', {
             header: true,
@@ -101,26 +99,21 @@ function App() {
     }, [])
 
     return (
-        <div className="App" style={{backgroundColor: "#E3ECE9"}}>
-            <Grid container>
-                <Grid container>
-                    <Drawer
-                        sx={{
-                            backgroundColor: "#E3ECE9",
-                            width: "20%",
-                            flexShrink: 0,
-                            '& .MuiDrawer-paper': {
-                                width: "20%",
-                                boxSizing: 'border-box',
-                            }
-                        }}
-                        variant="permanent"
-                        anchor="left"
-                    >
-                        <Toolbar sx={{backgroundColor: "#656176", color: "white"}}>
+        <div className="App" style={{backgroundColor: "#E3ECE9", fontFamily: "Mulish"}}>
+            <Typography variant={"h3"} sx={{padding: "1rem"}}>Welcome to the QuaFoodies App!</Typography>
+            <Typography variant={"h5"} sx={{padding: "1rem"}}>We think the restaurant industry can do data better. </Typography>
+            <Typography variant={"body1"} sx={{padding: "1rem"}}>Below you will find two maps outlining restaurant closures and openings since March 2020, which highlights the impact of the covid-19 pandemic.</Typography>
+            <Typography variant={"body1"} sx={{padding: "1rem"}}>To take a closer look, please select the state "Arizona"</Typography>
+            <Grid container justifyContent={"center"} alignItems={"center"}>
+               <Choropleth data={openingData} title={"Openings"} colors={"BuPu"} titleColor={"#3B003A"}></Choropleth>
+               <Choropleth data={closingData} title={"Closings"} colors={"PuRd"}  titleColor={"#530018"}></Choropleth>
+                {showFeatureSelection && <Grid container>
+                    <Grid container direction={"row"} justifyContent={"space-evenly"} alignItems={"space-between"}>
+                        <Toolbar sx={{backgroundColor: "#656176", color: "white", width:"100%"}}>
                             <Typography variant={"h5"}>Select from
                                 below:</Typography>
                         </Toolbar>
+                    </Grid>
                         <Divider></Divider>
                         <Grid container direction={"row"} justifyContent={"space-evenly"} alignItems={"space-between"}>
                             <Grid item md={12} sx={{padding: "2rem"}}>
@@ -162,41 +155,7 @@ function App() {
                                     }}>Submit</Button>
                             </Grid>
                         </Grid>
-                    </Drawer>
-                </Grid>
-                <Grid container justifyContent={"center"} sx={{backgroundColor: "#E3ECE9"}}>
-                    <Grid item xs={5} sx={{padding: "2rem"}}>
-                        <Box sx={{minWidth: 120, backgroundColor: "#E3ECE9", margin: "1rem"}}>
-                            <FormControl fullWidth size={"small"}>
-                                <Autocomplete
-                                    options={selectedDataTypeOptions}
-                                    onChange={(event, newValue) => {
-                                        setSelectedDataType((newValue as string));
-                                    }}
-                                    value={selectedDataType}
-                                    renderInput={(params) =>
-                                        <StyledTextField {...params}
-                                                         variant={"outlined"}
-                                                         fullWidth size={"small"}
-                                                         label={"Select Openings or Closings"}
-                                                         InputProps={{
-                                                             ...params.InputProps
-                                                         }}
-                                        />}/>
-                            </FormControl>
-                        </Box></Grid>
-                    <Grid item xs={12}>
-                        <Typography variant={"h4"} sx={{
-                            margin: "2rem",
-                            color: "#1E000E",
-                            fontFamily: 'Mulish',
-                            fontWeight: "800"
-                        }}></Typography>
-                    </Grid>
-                    <Grid item xs={12} sx={{margin: "2rem", height: "75vh", width: "100vw"}}>
-                        <Choropleth data={selectedDataType === "Openings" ? openingData : closingData}/>
-                    </Grid>
-                </Grid>
+                </Grid>}
             </Grid>
         </div>
     );
