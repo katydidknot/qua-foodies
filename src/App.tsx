@@ -6,6 +6,8 @@ import {FeatureCollection} from "./us-states";
 import Papa from "papaparse";
 import {PredictionMessage} from "./Components/PredictionMessage";
 import axios from "axios";
+import {CountyChoropleth} from "./Components/CountyChoropleth";
+import {AZCounties} from "./counties-az";
 
 export interface CSVRow {
     id: string,
@@ -34,6 +36,8 @@ export interface CSVRow {
 function App() {
     const [openingData, setOpeningData] = useState<any>(null)
     const [closingData, setClosingData] = useState<any>(null)
+    const [azClosingData, setAzClosingData] = useState<any>(null)
+    const [azOpeningData, setAzOpeningData] = useState<any>(null)
     const [showPrediction, setShowPrediction] = useState<boolean>(false)
     const [showFeatureSelection, setShowFeatureSelection] = useState<boolean>(false)
 
@@ -80,6 +84,7 @@ function App() {
                         "value": value
                     }
                 })])
+
             }
         });
     }, [])
@@ -92,11 +97,13 @@ function App() {
             <Typography variant={"body1"} sx={{padding: "1rem"}}>Below you will find two maps outlining restaurant
                 closures and openings since March 2020, which highlights the impact of the covid-19
                 pandemic.</Typography>
-            <Typography variant={"body1"} sx={{padding: "1rem"}}>To take a closer look, please select the state
-                "Arizona"</Typography>
             <Grid container justifyContent={"center"} alignItems={"center"} sx={{backgroundColor: "#E3ECE9"}}>
-                <Choropleth data={openingData} title={"Openings"} colors={"BuPu"} titleColor={"#3B003A"}></Choropleth>
-                <Choropleth data={closingData} title={"Closings"} colors={"PuRd"} titleColor={"#530018"}></Choropleth>
+                <Choropleth data={openingData} title={"Lower 48 Openings"} colors={"BuPu"} titleColor={"#3B003A"}></Choropleth>
+                <Choropleth data={closingData} title={"Lower 48 Closings"} colors={"PuRd"} titleColor={"#530018"}></Choropleth>
+               <Grid item md={12}><Typography variant={"body1"} sx={{padding: "1rem"}}>Below you will find two maps outlining restaurant
+                    closures and openings since March 2020 in the state of Arizona.</Typography></Grid>
+                <CountyChoropleth data={[]} title={"Arizona Openings"} colors={"YlGnBu"} titleColor={"#530018"}></CountyChoropleth>
+                <CountyChoropleth data={[]} title={"Arizona Closings"} colors={"YlOrBr"} titleColor={"#530018"}></CountyChoropleth>
                 <Grid container>
                     <Grid container direction={"row"} justifyContent={"space-evenly"} alignItems={"space-between"}>
                         <Toolbar sx={{backgroundColor: "#656176", color: "white", width: "100%"}}>
