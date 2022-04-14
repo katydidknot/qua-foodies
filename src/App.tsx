@@ -18,6 +18,8 @@ import {Choropleth} from "./Choropleth";
 import {FeatureCollection} from "./us-states";
 import Papa from "papaparse";
 import StyledTextField from "./Components/StyledTextField";
+import {PredictionMessage} from "./Components/PredictionMessage";
+import axios from "axios";
 
 export interface CSVRow {
     id: string,
@@ -47,7 +49,19 @@ function App() {
     const [openingData, setOpeningData] = useState<any>(null)
     const [closingData, setClosingData] = useState<any>(null)
     const [selectedDataType, setSelectedDataType] = useState<string>("Openings")
+    const [showPrediction, setShowPrediction] = useState<boolean>(false)
     const selectedDataTypeOptions = ["Openings", "Closings"]
+
+    const getPrediction = async () => {
+        const response = await axios.post("localhost:5000/api", {
+            'review_count': 1,
+            'rating': 1,
+            'price': 1,
+            'pickup': 1,
+            'delivery': 1
+        })
+        setShowPrediction(true)
+    }
 
     useEffect(() => {
         Papa.parse('yelp_data_final.csv', {
@@ -131,8 +145,12 @@ function App() {
                                 </FormGroup>
                             </Grid>
                             <Grid item md={1}></Grid>
+                            <Grid item md={10}>
+                                {showPrediction && <PredictionMessage/>}
+                            </Grid>
                             <Grid item md={12}>
                                 <Button
+                                    onClick={() => getPrediction()}
                                     sx={{
                                         color: "#280004",
                                         backgroundColor: "#E3ECE9",
