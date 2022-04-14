@@ -4,9 +4,11 @@ import './App.css';
 import {Choropleth} from "./Choropleth";
 import {YearSelect} from "./Components/Select";
 import {CitySelect} from "./Components/CitySelect";
+import {parseCsv} from "./LoadYelpData";
 
 
 function App() {
+    parseCsv()
     return (
         <div className="App" style={{backgroundColor: "#E3ECE9"}}>
             <Grid container>
