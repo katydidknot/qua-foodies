@@ -1,16 +1,22 @@
 import React from "react";
 import {ResponsiveChoropleth} from "@nivo/geo";
 import {FeatureCollection} from "./us-states"
-import {Box, Typography, Grid} from '@mui/material';
+import {Box, Grid, Typography} from '@mui/material';
 
-export const Choropleth: React.FC<{ data: any, title: string, colors: string, titleColor: string}> = ({data, title, colors, titleColor}) => {
+export const Choropleth: React.FC<{ data: any, title: string, colors: string, titleColor: string }> = ({
+                                                                                                           data,
+                                                                                                           title,
+                                                                                                           colors,
+                                                                                                           titleColor
+                                                                                                       }) => {
     const maxData = () => {
         return Math.max.apply(Math, data?.map((o: any) => parseInt(o.value))) || 0
     }
     return (
-        <>
-            <Typography variant={"h5"} sx={{marginLeft: "3rem", color: titleColor, fontWeight: "800"}}>{title}</Typography>
-            <Box sx={{margin: "2rem", height: "400px", width: "640px"}}>
+        <>  <Grid direction={"column"} justifyContent={"space-evenly"} alignItems={"center"}>
+            <Typography variant={"h4"}
+                        sx={{color: titleColor, fontWeight: "800", marginLeft: "1rem"}}>{title}</Typography>
+            <Box sx={{height: "300px", width: "640px", backgroundColor: "#E3ECE9"}}>
                 <ResponsiveChoropleth
                     data={data || []}
                     features={FeatureCollection.features}
@@ -22,9 +28,9 @@ export const Choropleth: React.FC<{ data: any, title: string, colors: string, ti
                     valueFormat=".2s"
                     projectionScale={400}
                     projectionTranslation={[1.69, 1.43]}
-                    // projectionRotation={[0, 0, 0]}
                     borderWidth={0.5}
                     borderColor="#152538"
+                    onClick={(event) => console.log("clicked!", event)}
                     legends={[
                         {
                             anchor: 'bottom-left',
@@ -52,5 +58,6 @@ export const Choropleth: React.FC<{ data: any, title: string, colors: string, ti
                     ]}
                 />
             </Box>
+        </Grid>
         </>)
 }
