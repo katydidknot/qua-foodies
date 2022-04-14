@@ -15,7 +15,7 @@ export const Choropleth: React.FC<{ data: any }> = ({data}) => {
                 margin={{top: 0, right: 0, bottom: 0, left: 20}}
                 colors="BuPu"
                 domain={[0, maxData()]}
-                unknownColor="#666666"
+                unknownColor="white"
                 label="properties.name"
                 valueFormat=".2s"
                 projectionScale={1150}
