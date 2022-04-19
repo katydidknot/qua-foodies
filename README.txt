@@ -18,7 +18,7 @@ Installation Dependencies:
 
 1. node (preferably 17.4.0)
 
-   To install node, if on a macOS please follow the directions here:
+   To install node, please follow the directions here:
    https://nodejs.org/en/download/ - you can also use homebrew (my preference) to install node https://brew.sh/ by running the following
    command:
    `brew install node@(version goes here)`
