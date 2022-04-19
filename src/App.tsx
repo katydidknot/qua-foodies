@@ -1,13 +1,13 @@
-import {Button, Checkbox, Divider, FormControlLabel, FormGroup, Grid, Toolbar, Typography} from '@mui/material';
+import {Box, Button, Checkbox, Divider, FormControlLabel, FormGroup, Grid, Toolbar, Typography} from '@mui/material';
 import React, {useEffect, useState} from 'react';
 import './App.css';
 import {Choropleth} from "./Choropleth";
 import {FeatureCollection} from "./us-states";
 import Papa from "papaparse";
 import {PredictionMessage} from "./Components/PredictionMessage";
+import {ResponsiveBar} from '@nivo/bar'
 import axios from "axios";
-import {CountyChoropleth} from "./Components/CountyChoropleth";
-import {AZCounties} from "./counties-az";
+import {BarChart} from "./BarChart";
 
 export interface CSVRow {
     id: string,
@@ -35,11 +35,9 @@ export interface CSVRow {
 
 function App() {
     const [openingData, setOpeningData] = useState<any>(null)
+    const [openingHeatMapData, setOpeningHeatmapData] = useState<any>(null)
     const [closingData, setClosingData] = useState<any>(null)
-    const [azClosingData, setAzClosingData] = useState<any>(null)
-    const [azOpeningData, setAzOpeningData] = useState<any>(null)
     const [showPrediction, setShowPrediction] = useState<boolean>(false)
-    const [showFeatureSelection, setShowFeatureSelection] = useState<boolean>(false)
 
     const getPrediction = async () => {
         const response = await axios.post("http://127.0.0.1:5000/api", {
@@ -73,6 +71,24 @@ function App() {
                         "value": value
                     }
                 })])
+                setOpeningHeatmapData([...FeatureCollection?.features?.map(i => {
+                    const value = results.data?.filter(s => {
+                        const csvRow = s as CSVRow
+                        return (csvRow.isClosed === 0 && csvRow.state.trim() === i.properties.abbr.trim())
+                    }).length;
+                    const value2 = results.data?.filter(s => {
+                        const csvRow = s as CSVRow
+                        return (csvRow.isClosed === 1 && csvRow.state.trim() === i.properties.abbr.trim())
+                    }).length;
+                    // console.log("STATE", i.properties.name, "HAS ", value, "OPENINGS")
+                    return {
+                        "id": i.id,
+                        "state": i.properties.abbr,
+                        "Open": value,
+                        "Closed": value2,
+                    }
+                })])
+
                 setClosingData([...FeatureCollection?.features?.map(i => {
                     const value = results.data?.filter(s => {
                         const csvRow = s as CSVRow
@@ -95,15 +111,15 @@ function App() {
             <Typography variant={"h5"} sx={{padding: "1rem"}}>We think the restaurant industry can do data
                 better. </Typography>
             <Typography variant={"body1"} sx={{padding: "1rem"}}>Below you will find two maps outlining restaurant
-                closures and openings since March 2020, which highlights the impact of the covid-19
+                closures and restaurants that have stayed open since March 2020, which highlights the impact of the
+                covid-19
                 pandemic.</Typography>
             <Grid container justifyContent={"center"} alignItems={"center"} sx={{backgroundColor: "#E3ECE9"}}>
-                <Choropleth data={openingData} title={"Lower 48 Openings"} colors={"BuPu"} titleColor={"#3B003A"}></Choropleth>
-                <Choropleth data={closingData} title={"Lower 48 Closings"} colors={"PuRd"} titleColor={"#530018"}></Choropleth>
-               <Grid item md={12}><Typography variant={"body1"} sx={{padding: "1rem"}}>Below you will find two maps outlining restaurant
-                    closures and openings since March 2020 in the state of Arizona.</Typography></Grid>
-                <CountyChoropleth data={[]} title={"Arizona Openings"} colors={"YlGnBu"} titleColor={"#530018"}></CountyChoropleth>
-                <CountyChoropleth data={[]} title={"Arizona Closings"} colors={"YlOrBr"} titleColor={"#530018"}></CountyChoropleth>
+                <Choropleth data={openingData} title={"Lower 48 Open Restaurants"} colors={"BuPu"}
+                            titleColor={"#3B003A"}></Choropleth>
+                <Choropleth data={closingData} title={"Lower 48 Closings"} colors={"PuRd"}
+                            titleColor={"#530018"}></Choropleth>
+                <BarChart data={openingHeatMapData}></BarChart>
                 <Grid container>
                     <Grid container direction={"row"} justifyContent={"space-evenly"} alignItems={"space-between"}>
                         <Toolbar sx={{backgroundColor: "#656176", color: "white", width: "100%"}}>
