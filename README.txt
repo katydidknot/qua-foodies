@@ -23,22 +23,22 @@ Installation Dependencies:
    command:
    `brew install node@(version goes here)`
 
-2. npm (preferably 8.3.1) && or yarn 
+2. npm (preferably 8.3.1) && or yarn
    To install npm follow directions here: https://docs.npmjs.com/downloading-and-installing-node-js-and-npm
    To install yarn follow directions here: https://classic.yarnpkg.com/lang/en/docs/install/#mac-stable
 3. python
 4. flask
 
-After installing please run the following command if using yarn: 
+After installing please run the following command if using yarn:
 `yarn install`
 
-If using npm run: 
+If using npm run:
 `npm i`
 
 
 ## Execution -
 
-After installing all packages, run the following commands to start the front-end: 
+After installing all packages, run the following commands to start the front-end:
 `npm run start` or if using yarn: `yarn run start`
 
 The application should start on the following url: http://localhost:3000/
