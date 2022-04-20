@@ -1386,7 +1386,7 @@
 
 "@nivo/bar@^0.79.1":
   version "0.79.1"
-  resolved "https://registry.yarnpkg.com/@nivo/bar/-/bar-0.79.1.tgz#42d28169307e735cb84e57b4b6915195ef1c97fb"
+  resolved "https://registry.npmjs.org/@nivo/bar/-/bar-0.79.1.tgz"
   integrity sha512-swJ2FtFeRPWJK9O6aZiqTDi2J6GrU2Z6kIHBBCXBlFmq6+vfd5AqOHytdXPTaN80JsKDBBdtY7tqRjpRPlDZwQ==
   dependencies:
     "@nivo/annotations" "0.79.1"
@@ -1402,7 +1402,7 @@
 
 "@nivo/bump@^0.79.1":
   version "0.79.1"
-  resolved "https://registry.yarnpkg.com/@nivo/bump/-/bump-0.79.1.tgz#f60157e79385cbeac1ddded776a066e227f35e8d"
+  resolved "https://registry.npmjs.org/@nivo/bump/-/bump-0.79.1.tgz"
   integrity sha512-vgLcIxCU7nAt3KS2j1O8LXDCaLF+Hr7OYFhZ4ghoJZfeSjopdvTvo+G9W8WQCoslWB6iZA3prdvXQ4v3VCoydQ==
   dependencies:
     "@nivo/axes" "0.79.0"
@@ -1453,7 +1453,7 @@
 
 "@nivo/heatmap@^0.79.1":
   version "0.79.1"
-  resolved "https://registry.yarnpkg.com/@nivo/heatmap/-/heatmap-0.79.1.tgz#e420e1d4a6a6d88126be9b06bd4b5c5f461a7ebc"
+  resolved "https://registry.npmjs.org/@nivo/heatmap/-/heatmap-0.79.1.tgz"
   integrity sha512-lMYtmGrMCjnV0SJ/FwRFY94Wjw93U7x8Ex2J9hIRoabtEbGcMZBaQMVQwQE2gUDjh4aDj+/ihLXcUxLc+7fz3g==
   dependencies:
     "@nivo/annotations" "0.79.1"
@@ -1470,7 +1470,7 @@
 
 "@nivo/line@^0.79.1":
   version "0.79.1"
-  resolved "https://registry.yarnpkg.com/@nivo/line/-/line-0.79.1.tgz#58c9711b491a7602903c2c41dda5f3fe9a2971cb"
+  resolved "https://registry.npmjs.org/@nivo/line/-/line-0.79.1.tgz"
   integrity sha512-V+2wY5TGpWiWBcb2LDtNsO79Ix93QtSq1HAdEIsjYtwFT/ekoCUA/OorIjRVUVzyf27vjjlbhmNNKrqIsYQR1Q==
   dependencies:
     "@nivo/annotations" "0.79.1"
@@ -1509,7 +1509,7 @@
 
 "@nivo/voronoi@0.79.0":
   version "0.79.0"
-  resolved "https://registry.yarnpkg.com/@nivo/voronoi/-/voronoi-0.79.0.tgz#e3388169e2da078a98b18ebadfc75d02ee98fa5b"
+  resolved "https://registry.npmjs.org/@nivo/voronoi/-/voronoi-0.79.0.tgz"
   integrity sha512-0MrY33MBjLPQsgtf6PU+NUeQVib0g5fR9UBWsbO3YdkgDhXNnbXZ4FZlMAznoDSOxQ/efAuP7jWfnemFCpSwUg==
   dependencies:
     d3-delaunay "^5.3.0"
@@ -2001,7 +2001,7 @@
 
 "@types/papaparse@^5.3.2":
   version "5.3.2"
-  resolved "https://registry.yarnpkg.com/@types/papaparse/-/papaparse-5.3.2.tgz#6ccace6eac8ddb03a6fd06883b84dd6c6561f69f"
+  resolved "https://registry.npmjs.org/@types/papaparse/-/papaparse-5.3.2.tgz"
   integrity sha512-BNbCHJkTE4RwmAFkCxEalET4mDvGr/1ld7ZtQ4i/laWI/iiVt+GL07stdvufle4KfywyvloqqpIiJscXNCrKxA==
   dependencies:
     "@types/node" "*"
@@ -2646,7 +2646,7 @@ axe-core@^4.3.5:
 
 axios@^0.26.1:
   version "0.26.1"
-  resolved "https://registry.yarnpkg.com/axios/-/axios-0.26.1.tgz#1ede41c51fcf51bbbd6fd43669caaa4f0495aaa9"
+  resolved "https://registry.npmjs.org/axios/-/axios-0.26.1.tgz"
   integrity sha512-fPwcX4EvnSHuInCMItEhAGnaSEXRBjtzh9fOtsE6E1G6p7vl7edEeZe11QHf18+6+9gR5PbKV/sGKNaD8YaMeA==
   dependencies:
     follow-redirects "^1.14.8"
@@ -3520,7 +3520,7 @@ d3-array@2, d3-array@^2.3.0:
 
 d3-delaunay@^5.3.0:
   version "5.3.0"
-  resolved "https://registry.yarnpkg.com/d3-delaunay/-/d3-delaunay-5.3.0.tgz#b47f05c38f854a4e7b3cea80e0bb12e57398772d"
+  resolved "https://registry.npmjs.org/d3-delaunay/-/d3-delaunay-5.3.0.tgz"
   integrity sha512-amALSrOllWVLaHTnDLHwMIiz0d1bBu9gZXd1FiLfXf8sHcX9jrcj81TVZOqD4UX7MgBZZ07c8GxzEgBpJqc74w==
   dependencies:
     delaunator "4"
@@ -3706,7 +3706,7 @@ del@^6.0.0:
 
 delaunator@4:
   version "4.0.1"
-  resolved "https://registry.yarnpkg.com/delaunator/-/delaunator-4.0.1.tgz#3d779687f57919a7a418f8ab947d3bddb6846957"
+  resolved "https://registry.npmjs.org/delaunator/-/delaunator-4.0.1.tgz"
   integrity sha512-WNPWi1IRKZfCt/qIDMfERkDp93+iZEmOxN2yy4Jg+Xhv8SLk2UTqqbe1sfiipn0and9QrE914/ihdx82Y/Giag==
 
 delayed-stream@~1.0.0:
@@ -6504,7 +6504,7 @@ p-try@^2.0.0:
 
 papaparse@^5.3.2:
   version "5.3.2"
-  resolved "https://registry.yarnpkg.com/papaparse/-/papaparse-5.3.2.tgz#d1abed498a0ee299f103130a6109720404fbd467"
+  resolved "https://registry.npmjs.org/papaparse/-/papaparse-5.3.2.tgz"
   integrity sha512-6dNZu0Ki+gyV0eBsFKJhYr+MdQYAzFUGlBMNj3GNrmHxmz1lfRa24CjFObPXtjcetlOv5Ad299MhIK0znp3afw==
 
 param-case@^3.0.4:

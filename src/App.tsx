@@ -1,13 +1,23 @@
-import {Box, Button, Checkbox, Divider, FormControlLabel, FormGroup, Grid, Toolbar, Typography} from '@mui/material';
+import {
+    Button,
+    Checkbox,
+    Divider,
+    FormControl,
+    FormControlLabel,
+    FormGroup,
+    Grid,
+    Toolbar,
+    Typography
+} from '@mui/material';
 import React, {useEffect, useState} from 'react';
 import './App.css';
 import {Choropleth} from "./Choropleth";
 import {FeatureCollection} from "./us-states";
 import Papa from "papaparse";
 import {PredictionMessage} from "./Components/PredictionMessage";
-import {ResponsiveBar} from '@nivo/bar'
 import axios from "axios";
-import {BarChart} from "./BarChart";
+import {Features} from "./Features";
+import StyledTextField from "./Components/StyledTextField";
 
 export interface CSVRow {
     id: string,
@@ -119,7 +129,7 @@ function App() {
                             titleColor={"#3B003A"}></Choropleth>
                 <Choropleth data={closingData} title={"Lower 48 Closings"} colors={"PuRd"}
                             titleColor={"#530018"}></Choropleth>
-                <BarChart data={openingHeatMapData}></BarChart>
+                {/*<BarChart data={openingHeatMapData}></BarChart>*/}
                 <Grid container>
                     <Grid container direction={"row"} justifyContent={"space-evenly"} alignItems={"space-between"}>
                         <Toolbar sx={{backgroundColor: "#656176", color: "white", width: "100%"}}>
@@ -137,20 +147,23 @@ function App() {
                             <Typography variant={"body1"}>Select from inputs below to predict if your restaurant will
                                 succeed.</Typography>
                         </Grid>
+                        <Grid container justifyContent={"center"}>
+                            <Grid item>
+                            <FormControl fullWidth size={"small"}>
+                                <StyledTextField
+                                    variant={"outlined"}
+                                    fullWidth size={"small"}
+                                    label={"Zip-code"}
+                                />
+                            </FormControl>
+                        </Grid>
+                        </Grid>
 
                         <Grid container justifyContent="center" spacing={3}>
-                            <FormGroup>
-                                <FormControlLabel control={<Checkbox/>} label="Vegetarian"/>
-                            </FormGroup>
-                            <FormGroup>
-                                <FormControlLabel control={<Checkbox/>} label="BYOB"/>
-                            </FormGroup>
-                            <FormGroup>
-                                <FormControlLabel control={<Checkbox/>} label="Family Friendly"/>
-                            </FormGroup>
-                            <FormGroup>
-                                <FormControlLabel control={<Checkbox/>} label="Brunch"/>
-                            </FormGroup>
+
+                            {Features.map(i => (<Grid item><FormGroup>
+                                <FormControlLabel control={<Checkbox/>} label={i}/>
+                            </FormGroup></Grid>))}
                         </Grid>
                         <Grid item xs={12} md={12}>
                             <Button
