@@ -206,7 +206,6 @@ function App() {
                             titleColor={"#3B003A"}></Choropleth>
                 <Choropleth data={closingData} title={"Lower 48 Closings"} colors={"PuRd"}
                             titleColor={"#530018"}></Choropleth>
-                {/*<BarChart data={openingHeatMapData}></BarChart>*/}
                 <Grid container>
                     <Toolbar sx={{backgroundColor: "#656176", color: "white", width: "100%"}}>
                         <Grid item xs={12}><Typography variant={"h4"} sx={{fontWeight: "800"}}>Restaurant
@@ -223,7 +222,9 @@ function App() {
                         <Grid item md={12} sx={{padding: "2rem"}}>
                             <Typography variant={"body1"}>Populate the inputs below to predict if your restaurant will
                                 succeed.</Typography>
+                            <Typography variant={"body1"}>Zipcode is required**</Typography>
                         </Grid>
+
                         <Grid container justifyContent={"center"}>
                             <Grid item>
                                 <Box sx={{minWidth: 200, backgroundColor: "#E3ECE9", marginBottom: "2rem"}}>
@@ -328,9 +329,11 @@ function App() {
                         </Grid>
                         <Grid item xs={12} md={12}>
                             <Button
+                                disabled={predictionRequest.zipCode.toString().length !== 5}
                                 size="large"
                                 onClick={() => getPrediction()}
                                 sx={{
+                                    '&.Mui-disabled': {backgroundColor: "lightgrey"},
                                     padding: "1rem",
                                     minWidth: "300px",
                                     marginTop: "3rem",
