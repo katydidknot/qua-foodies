@@ -3,23 +3,22 @@ import {useState} from "react"
 import {Autocomplete, Box, FormControl} from "@mui/material";
 import StyledTextField from "./StyledTextField";
 
-export const CitySelect: React.FC = () => {
-    const [selectedCity, setSelectedCity] = useState<string>("Chicago")
-    const years = ["Chicago", "New York", "Los Angeles"]
+export const SelectNumberComponent: React.FC<{ options: any, label: string }> = ({options, label}) => {
+    const [selectedAmount, setSelectedAmount] = useState<number>()
     return (
         <Box sx={{minWidth: 120, backgroundColor: "#E3ECE9", margin: "1rem"}}>
             <FormControl fullWidth size={"small"}>
                 <Autocomplete
-                    options={years}
+                    options={options}
                     onChange={(event, newValue) => {
-                        setSelectedCity((newValue as string));
+                        setSelectedAmount((newValue as number));
                     }}
-                    value={selectedCity}
+                    value={selectedAmount}
                     renderInput={(params) =>
                         <StyledTextField {...params}
                                          variant={"outlined"}
                                          fullWidth size={"small"}
-                                         label={"City"}
+                                         label={label}
                                          InputProps={{
                                              ...params.InputProps
                                          }}

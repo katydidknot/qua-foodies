@@ -15,6 +15,7 @@ export const Features =
         {name: "italian", value: "Italian"},
         {name: "chinese", value: "Chinese"},
         {name: "bar", value: "Bar"},
+        {name: "sportsBar", value: "Sports Bar"},
         {name: "chickenWings", value: "Chicken wings"},
         {name: "iceCream", value: "Ice cream"},
         {name: "seafood", value: "Seafood"},
@@ -31,4 +32,6 @@ export const Features =
         {name: "asianFusion", value: "Asian Fusion"},
         {name: "vegetarian", value: "Vegetarian"},
         {name: "vegan", value: "Vegan"},
+        {name: "price", value: "Price"},
+        {name: "rating", value: "Rating"},
     ]

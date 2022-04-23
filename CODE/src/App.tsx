@@ -1,4 +1,6 @@
 import {
+    Autocomplete,
+    Box,
     Button,
     Checkbox,
     Divider,
@@ -75,7 +77,10 @@ export interface PredictionRequest {
     steak: number,
     asianFusion: number,
     vegetarian: number,
-    vegan: number
+    vegan: number,
+    sportsBar: number,
+    rating: number,
+    price: number
 }
 
 function App() {
@@ -117,7 +122,10 @@ function App() {
         steak: 0,
         asianFusion: 0,
         vegetarian: 0,
-        vegan: 0
+        vegan: 0,
+        sportsBar: 0,
+        price: 0,
+        rating: 0
     })
 
     const getPrediction = async () => {
@@ -198,7 +206,8 @@ function App() {
                 {/*<BarChart data={openingHeatMapData}></BarChart>*/}
                 <Grid container>
                     <Toolbar sx={{backgroundColor: "#656176", color: "white", width: "100%"}}>
-                        <Grid item xs={12}><Typography variant={"h4"} sx={{fontWeight: "800"}}>Restaurant Survivability</Typography></Grid>
+                        <Grid item xs={12}><Typography variant={"h4"} sx={{fontWeight: "800"}}>Restaurant
+                            Survivability</Typography></Grid>
                     </Toolbar>
 
                     <Divider></Divider>
@@ -262,9 +271,10 @@ function App() {
                                     </FormGroup>))}
                             </Grid>
                             <Toolbar sx={{backgroundColor: "#656176", color: "white", width: "100%"}}>
-                                <Grid item xs={12}><Typography variant={"h6"} sx={{fontWeight: "800", }}>Cuisine Type:</Typography></Grid>
+                                <Grid item xs={12}><Typography variant={"h6"} sx={{fontWeight: "800",}}>Cuisine
+                                    Type:</Typography></Grid>
                             </Toolbar>
-                            {Features.filter(i => i.name !== "pickup" && i.name !== "delivery" && i.name !== "reservations").map(i => (
+                            {Features.filter(i => i.name !== "pickup" && i.name !== "delivery" && i.name !== "reservations" && i.name !== "price" && i.name !== "rating").map(i => (
                                 <Grid key={i.name} item><FormGroup>
                                     <FormControlLabel control={<Checkbox
                                         checked={Object.entries(predictionRequest).filter(p => p[0] === i.name)?.[0]?.[1] === 1}
@@ -277,6 +287,36 @@ function App() {
                                         }}
                                     />} label={i.value}/>
                                 </FormGroup></Grid>))}
+                            <Toolbar sx={{backgroundColor: "#656176", color: "white", width: "100%"}}>
+                                <Grid item xs={12}><Typography variant={"h6"} sx={{fontWeight: "800"}}>Rating and
+                                    Price:</Typography></Grid>
+                            </Toolbar>
+                            <Grid container justifyContent={"center"} sx={{margin: "1rem"}}>
+                                {Features.filter(i => i.name === "price" || i.name === "rating").map(i => {
+                                    const options = i.name === "price" ? [1, 2, 3, 4] : [1, 2, 3, 4, 5]
+                                    return (
+                                        <Box sx={{minWidth: 120, backgroundColor: "#E3ECE9", margin: "1rem"}}>
+                                            <FormControl fullWidth size={"small"}>
+                                                <Autocomplete
+                                                    options={options}
+                                                    onChange={(event, newValue) => {
+                                                        console.log(newValue)
+                                                    }}
+                                                    value={0}
+                                                    renderInput={(params) =>
+                                                        <StyledTextField {...params}
+                                                                         variant={"outlined"}
+                                                                         fullWidth size={"small"}
+                                                                         label={i.value}
+                                                                         InputProps={{
+                                                                             ...params.InputProps
+                                                                         }}
+                                                        />}/>
+                                            </FormControl>
+                                        </Box>
+                                    )
+                                })}
+                            </Grid>
                         </Grid>
                         <Grid item xs={12} md={12}>
                             <Button
