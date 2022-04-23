@@ -139,9 +139,9 @@ function App() {
             }
         })
         if (response.data.result === "1") {
-            setPrediction({color: "#3da332", message: "You will have success!"})
-        } else {
             setPrediction({color: "#c93e2e", message: "You will have trouble surviving."})
+        } else {
+            setPrediction({color: "#3da332", message: "You will have success!"})
         }
         setShowPrediction(true)
     }
