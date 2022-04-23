@@ -2,7 +2,7 @@ import {styled, TextField} from "@mui/material";
 
 const StyledTextField = styled(TextField)({
     backgroundColor: "#f1f2f2",
-    color:  '#3b1954',
+    color: '#3b1954',
     '& label.Mui-focused': {
         color: '#3b1954',
     },
@@ -23,8 +23,8 @@ const StyledTextField = styled(TextField)({
         paddingLeft: 10,
     },
     "&  .MuiFormHelperText-root.Mui-error": {
-        backgroundColor:'#ebf3f6',
-        margin:0,
+        backgroundColor: '#E3ECE9',
+        margin: 0,
         paddingLeft: 10
     },
 });

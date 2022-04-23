@@ -13,7 +13,7 @@ export const Choropleth: React.FC<{ data: any, title: string, colors: string, ti
         return Math.max.apply(Math, data?.map((o: any) => parseInt(o.value))) || 0
     }
     return (
-        <>  <Grid direction={"column"} justifyContent={"space-evenly"} alignItems={"center"}>
+        <>  <Grid container direction={"column"} justifyContent={"space-evenly"} alignItems={"center"}>
             <Typography variant={"h4"}
                         sx={{color: titleColor, fontWeight: "800", marginLeft: "1rem"}}>{title}</Typography>
             <Box sx={{height: "300px", width: "640px", backgroundColor: "#E3ECE9"}}>

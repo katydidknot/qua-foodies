@@ -43,20 +43,86 @@ export interface CSVRow {
     "coordinates.longitude": number,
 }
 
+export interface PredictionRequest {
+    zipCode: string
+    pickup: number,
+    delivery: number,
+    reservations: number,
+    hotDogs: number,
+    pizza: number,
+    traditionalAmerican: number,
+    sandwiches: number,
+    burgers: number,
+    coffee: number,
+    mexican: number,
+    brunch: number,
+    newAmerican: number,
+    italian: number,
+    chinese: number,
+    bar: number,
+    chickenWings: number,
+    iceCream: number,
+    seafood: number,
+    bakery: number,
+    salad: number,
+    desserts: number,
+    delis: number,
+    japanese: number,
+    bbq: number,
+    juiceBar: number,
+    cafe: number,
+    mediterranean: number,
+    steak: number,
+    asianFusion: number,
+    vegetarian: number,
+    vegan: number
+}
+
 function App() {
     const [openingData, setOpeningData] = useState<any>(null)
     const [openingHeatMapData, setOpeningHeatmapData] = useState<any>(null)
+    const [zipCode, setZipCode] = useState<string>("")
+    const [zipCodeError, setZipCodeError] = useState<string>("")
     const [closingData, setClosingData] = useState<any>(null)
     const [showPrediction, setShowPrediction] = useState<boolean>(false)
+    const [predictionRequest, setPredictionRequest] = useState<PredictionRequest>({
+        zipCode: "",
+        pickup: 0,
+        delivery: 0,
+        reservations: 0,
+        hotDogs: 0,
+        pizza: 0,
+        traditionalAmerican: 0,
+        sandwiches: 0,
+        burgers: 0,
+        coffee: 0,
+        mexican: 0,
+        brunch: 0,
+        newAmerican: 0,
+        italian: 0,
+        chinese: 0,
+        bar: 0,
+        chickenWings: 0,
+        iceCream: 0,
+        seafood: 0,
+        bakery: 0,
+        salad: 0,
+        desserts: 0,
+        delis: 0,
+        japanese: 0,
+        bbq: 0,
+        juiceBar: 0,
+        cafe: 0,
+        mediterranean: 0,
+        steak: 0,
+        asianFusion: 0,
+        vegetarian: 0,
+        vegan: 0
+    })
 
     const getPrediction = async () => {
-        const response = await axios.post("http://127.0.0.1:5000/api", {
-            'review_count': 1,
-            'rating': 1,
-            'price': 1,
-            'pickup': 1,
-            'delivery': 1
-        }, {
+        predictionRequest.zipCode = zipCode
+        const response = await axios.post("http://127.0.0.1:5000/api", predictionRequest, {
             headers: {
                 'Access-Control-Allow-Origin': '*'
             }
@@ -149,20 +215,45 @@ function App() {
                         </Grid>
                         <Grid container justifyContent={"center"}>
                             <Grid item>
-                            <FormControl fullWidth size={"small"}>
-                                <StyledTextField
-                                    variant={"outlined"}
-                                    fullWidth size={"small"}
-                                    label={"Zip-code"}
-                                />
-                            </FormControl>
-                        </Grid>
+                                <FormControl fullWidth size={"small"}>
+                                    <StyledTextField
+                                        sx={{marginBottom: "1rem"}}
+                                        fullWidth
+                                        size={"small"}
+                                        placeholder={"Zip Code"}
+                                        label={"Zip Code"}
+                                        value={zipCode}
+                                        onChange={(val: any) => {
+                                            setZipCode(val.target.value)
+                                        }}
+                                        onBlur={() => {
+                                            if (zipCode.length !== 5 || !(/^\d+$/.test(zipCode))) {
+                                                setZipCodeError("Please enter a valid zip code")
+                                                return
+                                            }
+                                            setZipCodeError("")
+                                        }}
+                                        error={zipCodeError !== ""}
+                                        helperText={zipCodeError}
+                                        variant={"outlined"}
+                                    />
+                                </FormControl>
+                            </Grid>
                         </Grid>
 
                         <Grid container justifyContent="center" spacing={3}>
 
-                            {Features.map(i => (<Grid item><FormGroup>
-                                <FormControlLabel control={<Checkbox/>} label={i}/>
+                            {Features.map(i => (<Grid key={i.name} item><FormGroup>
+                                <FormControlLabel control={<Checkbox
+                                    checked={Object.entries(predictionRequest).filter(p => p[0] === i.name)?.[0]?.[1] === 1}
+                                    onChange={(val) => {
+                                        const toggled = val.target.checked
+                                        console.log(val.target.checked)
+                                        // @ts-ignore
+                                        predictionRequest[i.name as keyof PredictionRequest] = toggled ? 1 : 0
+                                        setPredictionRequest({...predictionRequest,})
+                                    }}
+                                />} label={i.value}/>
                             </FormGroup></Grid>))}
                         </Grid>
                         <Grid item xs={12} md={12}>
