@@ -50,7 +50,7 @@ export interface PredictionRequest {
     pickup: number,
     delivery: number,
     reservations: number,
-    hotDogs: number,
+    hotdogs: number,
     pizza: number,
     traditionalAmerican: number,
     sandwiches: number,
@@ -75,7 +75,7 @@ export interface PredictionRequest {
     cafe: number,
     mediterranean: number,
     steak: number,
-    asianFusion: number,
+    asianfusion: number,
     vegetarian: number,
     vegan: number,
     sportsBar: number,
@@ -85,17 +85,20 @@ export interface PredictionRequest {
 
 function App() {
     const [openingData, setOpeningData] = useState<any>(null)
-    const [openingHeatMapData, setOpeningHeatmapData] = useState<any>(null)
     const [zipCode, setZipCode] = useState<string>("")
-    const [zipCodeError, setZipCodeError] = useState<string>("")
     const [closingData, setClosingData] = useState<any>(null)
     const [showPrediction, setShowPrediction] = useState<boolean>(false)
+    const [prediction, setPrediction] = useState<{ color: string, message: string }>({
+        color: "",
+        message: ""
+    })
+    const [allowedZips, setAllowedZips] = useState<string[]>([])
     const [predictionRequest, setPredictionRequest] = useState<PredictionRequest>({
         zipCode: "",
         pickup: 0,
         delivery: 0,
         reservations: 0,
-        hotDogs: 0,
+        hotdogs: 0,
         pizza: 0,
         traditionalAmerican: 0,
         sandwiches: 0,
@@ -120,7 +123,7 @@ function App() {
         cafe: 0,
         mediterranean: 0,
         steak: 0,
-        asianFusion: 0,
+        asianfusion: 0,
         vegetarian: 0,
         vegan: 0,
         sportsBar: 0,
@@ -135,6 +138,11 @@ function App() {
                 'Access-Control-Allow-Origin': '*'
             }
         })
+        if (response.data.result === "1") {
+            setPrediction({color: "#3da332", message: "You will have success!"})
+        } else {
+            setPrediction({color: "#c93e2e", message: "You will have trouble surviving."})
+        }
         setShowPrediction(true)
     }
     useEffect(() => {
@@ -155,23 +163,6 @@ function App() {
                         "value": value
                     }
                 })])
-                setOpeningHeatmapData([...FeatureCollection?.features?.map(i => {
-                    const value = results.data?.filter(s => {
-                        const csvRow = s as CSVRow
-                        return (csvRow.isClosed === 0 && csvRow.state.trim() === i.properties.abbr.trim())
-                    }).length;
-                    const value2 = results.data?.filter(s => {
-                        const csvRow = s as CSVRow
-                        return (csvRow.isClosed === 1 && csvRow.state.trim() === i.properties.abbr.trim())
-                    }).length;
-                    // console.log("STATE", i.properties.name, "HAS ", value, "OPENINGS")
-                    return {
-                        "id": i.id,
-                        "state": i.properties.abbr,
-                        "Open": value,
-                        "Closed": value2,
-                    }
-                })])
 
                 setClosingData([...FeatureCollection?.features?.map(i => {
                     const value = results.data?.filter(s => {
@@ -185,6 +176,18 @@ function App() {
                     }
                 })])
 
+            }
+        });
+        Papa.parse('covid_restaurant_integrated_data.csv', {
+            header: true,
+            download: true,
+            dynamicTyping: true,
+            complete: function (results) {
+                // @ts-ignore
+                const zips = results.data.map(i => i.zip)
+                // @ts-ignore
+                const zipsWithoutDupes = [...new Set(zips)];
+                setAllowedZips(zipsWithoutDupes.sort())
             }
         });
     }, [])
@@ -213,7 +216,7 @@ function App() {
                     <Divider></Divider>
                     <Grid item xs={12} md={4}></Grid>
                     <Grid item xs={12} md={4}>
-                        {showPrediction && <PredictionMessage/>}
+                        {showPrediction && <PredictionMessage color={prediction.color} message={prediction.message}/>}
                     </Grid>
                     <Grid item xs={12} md={4}></Grid>
                     <Grid container direction={"row"} justifyContent={"space-evenly"} alignItems={"space-between"}>
@@ -223,29 +226,29 @@ function App() {
                         </Grid>
                         <Grid container justifyContent={"center"}>
                             <Grid item>
-                                <FormControl fullWidth size={"small"}>
-                                    <StyledTextField
-                                        sx={{marginBottom: "1rem"}}
-                                        fullWidth
-                                        size={"small"}
-                                        placeholder={"Zip Code"}
-                                        label={"Zip Code"}
-                                        value={zipCode}
-                                        onChange={(val: any) => {
-                                            setZipCode(val.target.value)
-                                        }}
-                                        onBlur={() => {
-                                            if (zipCode.length !== 5 || !(/^\d+$/.test(zipCode))) {
-                                                setZipCodeError("Please enter a valid zip code")
-                                                return
-                                            }
-                                            setZipCodeError("")
-                                        }}
-                                        error={zipCodeError !== ""}
-                                        helperText={zipCodeError}
-                                        variant={"outlined"}
-                                    />
-                                </FormControl>
+                                <Box sx={{minWidth: 200, backgroundColor: "#E3ECE9", marginBottom: "2rem"}}>
+                                    <FormControl fullWidth size={"small"}>
+                                        <Autocomplete
+                                            getOptionLabel={(option) => option?.toString() || ""}
+                                            options={allowedZips}
+                                            onChange={(event, newValue) => {
+                                                // @ts-ignore
+                                                predictionRequest["zipCode"] = newValue
+                                                setPredictionRequest({...predictionRequest})
+                                                setZipCode(newValue || "")
+                                            }}
+                                            value={zipCode.toString() || allowedZips[0]}
+                                            renderInput={(params) =>
+                                                <StyledTextField {...params}
+                                                                 variant={"outlined"}
+                                                                 fullWidth size={"small"}
+                                                                 label={"Zip code"}
+                                                                 InputProps={{
+                                                                     ...params.InputProps
+                                                                 }}
+                                                />}/>
+                                    </FormControl>
+                                </Box>
                             </Grid>
                         </Grid>
 
@@ -295,14 +298,19 @@ function App() {
                                 {Features.filter(i => i.name === "price" || i.name === "rating").map(i => {
                                     const options = i.name === "price" ? [1, 2, 3, 4] : [1, 2, 3, 4, 5]
                                     return (
-                                        <Box sx={{minWidth: 120, backgroundColor: "#E3ECE9", margin: "1rem"}}>
+                                        <Box key={i.name}
+                                             sx={{minWidth: 120, backgroundColor: "#E3ECE9", margin: "1rem"}}>
                                             <FormControl fullWidth size={"small"}>
                                                 <Autocomplete
+                                                    getOptionLabel={(option) => option.toString() || ""}
                                                     options={options}
                                                     onChange={(event, newValue) => {
-                                                        console.log(newValue)
+                                                        // @ts-ignore
+                                                        predictionRequest[i.name as keyof PredictionRequest] = newValue
+                                                        setPredictionRequest({...predictionRequest})
                                                     }}
-                                                    value={0}
+                                                    // @ts-ignore
+                                                    value={predictionRequest[i.name]}
                                                     renderInput={(params) =>
                                                         <StyledTextField {...params}
                                                                          variant={"outlined"}
