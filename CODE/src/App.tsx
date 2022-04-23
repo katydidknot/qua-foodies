@@ -127,8 +127,8 @@ function App() {
         vegetarian: 0,
         vegan: 0,
         sportsBar: 0,
-        price: 0,
-        rating: 0
+        price: 1,
+        rating: 1
     })
 
     const getPrediction = async () => {
