@@ -197,11 +197,10 @@ function App() {
                             titleColor={"#530018"}></Choropleth>
                 {/*<BarChart data={openingHeatMapData}></BarChart>*/}
                 <Grid container>
-                    <Grid container direction={"row"} justifyContent={"space-evenly"} alignItems={"space-between"}>
-                        <Toolbar sx={{backgroundColor: "#656176", color: "white", width: "100%"}}>
-                            <Typography variant={"h5"}>Restaurant survivability </Typography>
-                        </Toolbar>
-                    </Grid>
+                    <Toolbar sx={{backgroundColor: "#656176", color: "white", width: "100%"}}>
+                        <Grid item xs={12}><Typography variant={"h4"} sx={{fontWeight: "800"}}>Restaurant Survivability</Typography></Grid>
+                    </Toolbar>
+
                     <Divider></Divider>
                     <Grid item xs={12} md={4}></Grid>
                     <Grid item xs={12} md={4}>
@@ -210,7 +209,7 @@ function App() {
                     <Grid item xs={12} md={4}></Grid>
                     <Grid container direction={"row"} justifyContent={"space-evenly"} alignItems={"space-between"}>
                         <Grid item md={12} sx={{padding: "2rem"}}>
-                            <Typography variant={"body1"}>Select from inputs below to predict if your restaurant will
+                            <Typography variant={"body1"}>Populate the inputs below to predict if your restaurant will
                                 succeed.</Typography>
                         </Grid>
                         <Grid container justifyContent={"center"}>
@@ -241,20 +240,43 @@ function App() {
                             </Grid>
                         </Grid>
 
-                        <Grid container justifyContent="center" spacing={3}>
-
-                            {Features.map(i => (<Grid key={i.name} item><FormGroup>
-                                <FormControlLabel control={<Checkbox
-                                    checked={Object.entries(predictionRequest).filter(p => p[0] === i.name)?.[0]?.[1] === 1}
-                                    onChange={(val) => {
-                                        const toggled = val.target.checked
-                                        console.log(val.target.checked)
-                                        // @ts-ignore
-                                        predictionRequest[i.name as keyof PredictionRequest] = toggled ? 1 : 0
-                                        setPredictionRequest({...predictionRequest,})
-                                    }}
-                                />} label={i.value}/>
-                            </FormGroup></Grid>))}
+                        <Grid container justifyContent="center" spacing={1}>
+                            <Toolbar sx={{backgroundColor: "#656176", color: "white", width: "100%"}}>
+                                <Grid item xs={12}><Typography variant={"h6"} sx={{fontWeight: "800"}}>How to order
+                                    food:</Typography></Grid>
+                            </Toolbar>
+                            <Grid container justifyContent={"center"} sx={{margin: "2rem"}}>
+                                {Features.filter(i => i.name === "pickup" || i.name === "delivery" || i.name === "reservations").map(i => (
+                                    <FormGroup row={true} key={i.name}>
+                                        <FormControlLabel
+                                            control={<Checkbox
+                                                checked={Object.entries(predictionRequest).filter(p => p[0] === i.name)?.[0]?.[1] === 1}
+                                                onChange={(val) => {
+                                                    const toggled = val.target.checked
+                                                    console.log(val.target.checked)
+                                                    // @ts-ignore
+                                                    predictionRequest[i.name as keyof PredictionRequest] = toggled ? 1 : 0
+                                                    setPredictionRequest({...predictionRequest,})
+                                                }}
+                                            />} label={i.value}/>
+                                    </FormGroup>))}
+                            </Grid>
+                            <Toolbar sx={{backgroundColor: "#656176", color: "white", width: "100%"}}>
+                                <Grid item xs={12}><Typography variant={"h6"} sx={{fontWeight: "800", }}>Cuisine Type:</Typography></Grid>
+                            </Toolbar>
+                            {Features.filter(i => i.name !== "pickup" && i.name !== "delivery" && i.name !== "reservations").map(i => (
+                                <Grid key={i.name} item><FormGroup>
+                                    <FormControlLabel control={<Checkbox
+                                        checked={Object.entries(predictionRequest).filter(p => p[0] === i.name)?.[0]?.[1] === 1}
+                                        onChange={(val) => {
+                                            const toggled = val.target.checked
+                                            console.log(val.target.checked)
+                                            // @ts-ignore
+                                            predictionRequest[i.name as keyof PredictionRequest] = toggled ? 1 : 0
+                                            setPredictionRequest({...predictionRequest,})
+                                        }}
+                                    />} label={i.value}/>
+                                </FormGroup></Grid>))}
                         </Grid>
                         <Grid item xs={12} md={12}>
                             <Button
@@ -267,7 +289,7 @@ function App() {
                                     marginBottom: "1rem",
                                     backgroundColor: "#656176",
                                     color: "white",
-                                }}>Submit</Button>
+                                }}>Get Prediction</Button>
                         </Grid>
                     </Grid>
                 </Grid>
