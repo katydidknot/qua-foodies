@@ -133,12 +133,22 @@ function App() {
 
     const getPrediction = async () => {
         predictionRequest.zipCode = zipCode
+
         const response = await axios.post("http://127.0.0.1:5000/api", predictionRequest, {
             headers: {
                 'Access-Control-Allow-Origin': '*'
             }
+        }).catch(function (error) {
+            setPrediction({
+                color: "#c93e2e",
+                message: "Unable to get prediction due to a server error. Please try again."
+            })
+            setShowPrediction(true)
         })
-        if (response.data.result === "1") {
+        if (!response?.data || !response) {
+            return
+        }
+        if (response?.data?.result === "1") {
             setPrediction({color: "#c93e2e", message: "You will have trouble surviving."})
         } else {
             setPrediction({color: "#3da332", message: "You will have success!"})
