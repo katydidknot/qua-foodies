@@ -47,6 +47,13 @@ After installing all packages, run the following command to start the front-end 
 
 If there is an issue with running the above command, navigate to the package.json file within the CODE directory and change the scripts' path "node_modules/.bin/react-scripts" to "react-scripts".
 
+NOTE ***: After unzipping, the file may not have the correct permissions, and you will see the following message:
+`sh: node_modules/.bin/react-scripts: Permission denied`
+
+if this message happens run the following command and then re-run npm run start:
+`chmod 755 node_modules/.bin/react-scripts`
+
+
 Open a new terminal and navigate to the api folder within the CODE directory. Run the following command to start the api server:
 `python3 server.py` (or `python server.py` if using alias for latest version of python)
 
