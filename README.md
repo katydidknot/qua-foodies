@@ -23,8 +23,19 @@ Installation Dependencies:
    command:
    `brew install node@(version goes here)`
 
-3. python
-4. flask
+2. python (3.7 or above)
+	Recommended command: `brew install python3`
+3. flask
+	Recommended command: `pip3 install flask`
+4. flask_cors
+	Recommended command: `pip3 install flask_cors`
+5. pickle
+	Recommended command: `pip3 install flask_cors`
+6. pandas
+	Recommended command: `pip3 install pandas`
+7. numpy
+	Recommended command: `pip3 install numpy`
+
 
 Using npm run: 
 `npm i`
@@ -32,8 +43,11 @@ Using npm run:
 
 ## Execution -
 
-After installing all packages, run the following commands to start the front-end: 
-`npm run start` 
+After installing all packages, run the following command to start the front-end from the CODE directory:
+`npm run start`
+
+Open a new terminal and navigate to the api folder within the CODE directory. Run the following command to start the api server:
+`python3 server.py` (or `python server.py` if using alias for latest version of python)
 
 The application should start on the following url: http://localhost:3000/
 
