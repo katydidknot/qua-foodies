@@ -1,3 +1,5 @@
+/// derived from https://gist.githubusercontent.com/michellechandra/0b2ce4923dc9b5809922/raw/a476b9098ba0244718b496697c5b350460d32f99/us-states.json
+
 export const FeatureCollection = {
     "type": "FeatureCollection", "features": [
         {
