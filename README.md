@@ -30,11 +30,14 @@ Installation Dependencies:
 4. flask_cors
 	Recommended command: `pip3 install flask_cors`
 5. pickle
-	Recommended command: `pip3 install flask_cors`
+	Recommended command: `pip3 install pickle`
 6. pandas
 	Recommended command: `pip3 install pandas`
 7. numpy
 	Recommended command: `pip3 install numpy`
+8. xgboost
+	Recommended command: `pip3 install xgboost`
+
 
 
 Using npm run: 
