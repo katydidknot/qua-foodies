@@ -29,18 +29,14 @@ Installation Dependencies:
 	Recommended command: `pip3 install flask`
 4. flask_cors
 	Recommended command: `pip3 install flask_cors`
-5. pickle
-	Recommended command: `pip3 install pickle`
-6. pandas
+5. pandas
 	Recommended command: `pip3 install pandas`
-7. numpy
+6. numpy
 	Recommended command: `pip3 install numpy`
-8. xgboost
+7. xgboost
 	Recommended command: `pip3 install xgboost`
 
-
-
-Using npm run: 
+Using npm run:
 `npm i`
 
 
@@ -48,6 +44,8 @@ Using npm run:
 
 After installing all packages, run the following command to start the front-end from the CODE directory:
 `npm run start`
+
+If there is an issue with running the above command, navigate to the package.json file within the CODE directory and change the scripts' path "node_modules/.bin/react-scripts" to "react-scripts".
 
 Open a new terminal and navigate to the api folder within the CODE directory. Run the following command to start the api server:
 `python3 server.py` (or `python server.py` if using alias for latest version of python)
